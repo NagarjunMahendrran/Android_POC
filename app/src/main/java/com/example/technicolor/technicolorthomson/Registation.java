@@ -45,7 +45,7 @@ public class Registation extends AppCompatActivity {
         }
         if(bt.getId() == R.id.btn_signup){
             if(validation()){
-                Log.e("I am okay","I am okay");
+              
             }else{
                 CoordinatorLayout Clayout = (CoordinatorLayout)findViewById(R.id.snackbarlocation);
                 snackbar = Snackbar.make(Clayout, "Please check the inputs!!!!", Snackbar.LENGTH_SHORT);
