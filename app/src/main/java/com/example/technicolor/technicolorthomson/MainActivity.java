@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         if(bt.getId() == R.id.sign_in){
             if(validation()){
             }else{
-                Log.e("I am not okay","I am not okay");
+                Log.e("I am not okay", "I am not arjun okay");
             }
 
         }
