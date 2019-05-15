@@ -7,11 +7,9 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,9 +43,9 @@ public class Registation extends AppCompatActivity {
         }
         if(bt.getId() == R.id.btn_signup){
             if(validation()){
-              
+
             }else{
-                CoordinatorLayout Clayout = (CoordinatorLayout)findViewById(R.id.snackbarlocation);
+                CoordinatorLayout Clayout = findViewById(R.id.snackbarlocation);
                 snackbar = Snackbar.make(Clayout, "Please check the inputs!!!!", Snackbar.LENGTH_SHORT);
                 View snackBarView = snackbar.getView();
                 snackBarView.setBackgroundColor(Color.RED);
