@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_weight="8"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/login_logo"
+        android:layout_weight="3"
+        />
+
+    <EditText
+        android:id="@+id/email_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_weight=".2"
+        android:hint="EmailID / UserName"
+        android:textColorHint="#808080"
+        />
+
+    <EditText
+        android:id="@+id/password_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".2"
+        android:text=""
+        android:textColorHint="#808080"
+        android:inputType="textPassword"
+        android:hint="Password"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight=".2"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/sign_up"
+            android:layout_width="50dp"
+            android:layout_height="58dp"
+            android:text="SIGN UP"
+            android:textColor="#fff"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:background="@drawable/button_shape"
+            android:layout_gravity="center"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="68dp"
+            tools:layout_editor_absoluteY="460dp"
+            tools:ignore="MissingConstraints" />
+
+
+
+        <Button
+            android:id="@+id/sign_in"
+            android:layout_width="50dp"
+            android:layout_height="58dp"
+            android:text="SIGN IN"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:background="@drawable/button_shape"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="215dp"
+            tools:layout_editor_absoluteY="460dp" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/aboutL2"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="30dp"
+        android:textColor="#0000FF"
+        android:autoLink="web"
+        android:textSize="15dp"
+        android:layout_gravity="right"
+        android:text="Forgot Password?"
+        android:linksClickable="true"
+        />
+
+    <TextView
+        android:id="@+id/copyright"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom|center"
+        android:textAlignment="gravity"
+        android:layout_weight="4"
+        android:text="©Technicolor 2019"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="675dp" />
+</LinearLayout>
