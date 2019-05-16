@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
         Button bt = (Button) view;
         if(bt.getId() == R.id.sign_up){
-            Intent myIntent = new Intent(this, Registation.class);
+            Intent myIntent = new Intent(this, Registration.class);
             startActivity(myIntent);
         }
         if(bt.getId() == R.id.sign_in){
@@ -59,6 +59,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed(); commented this line in order to disable back press
+        //Write your code here
+        Toast.makeText(getApplicationContext(), "Back press disabled!", Toast.LENGTH_SHORT).show();
     }
 
     public boolean validation() {

@@ -1,5 +1,6 @@
 package com.example.technicolor.technicolorthomson;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,11 +11,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Registation extends AppCompatActivity {
+public class Registration extends AppCompatActivity {
     static EditText username;
     static EditText email_id;
     static EditText password;
@@ -22,17 +24,19 @@ public class Registation extends AppCompatActivity {
     static String regex = "^(.+)@(.+)$";
     static Pattern pattern ;
     static Matcher match;
+    static Context mainscreen;
     static Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registation);
+        setContentView(R.layout.activity_registration);
         username = findViewById(R.id.signup_input_name);
         email_id = findViewById(R.id.signup_input_email);
         password = findViewById(R.id.signup_input_password);
         serial_id = findViewById(R.id.serial_id_text);
         pattern = Pattern.compile(regex);
+        mainscreen = Registration.this;
     }
 
     public void onClick(View view) {
@@ -44,6 +48,8 @@ public class Registation extends AppCompatActivity {
         if(bt.getId() == R.id.btn_signup){
             if(validation()){
 
+                new serverAPI("Registtion", mainscreen).execute();
+
             }else{
                 CoordinatorLayout Clayout = findViewById(R.id.snackbarlocation);
                 snackbar = Snackbar.make(Clayout, "Please check the inputs!!!!", Snackbar.LENGTH_SHORT);
@@ -54,6 +60,13 @@ public class Registation extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed(); commented this line in order to disable back press
+        //Write your code here
+        Toast.makeText(getApplicationContext(), "Back press disabled!", Toast.LENGTH_SHORT).show();
     }
 
     public boolean validation() {
