@@ -1,18 +1,35 @@
 package com.example.technicolor.technicolorthomson;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
+    public static ArrayList<String> device_name;
+    public static ArrayList<String> device_mac;
+    public static ArrayList<String> device_state;
+    public static String firewallmode;
+    public static String alexa;
+    public static String smart;
+    public static String cujoa;
+    public static String wifiDr;
+    public static String wifi_state;
+    public static String internet;
+    public static JSONObject internet_access;
     static EditText email_id_input;
     static EditText password_input;
     static String regex = "^(.+)@(.+)$";
@@ -66,4 +83,20 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    public void ack(String error, Context c) {
+
+        if (error.equals("success")) {
+            Toast.makeText(c, Html.fromHtml("<p><strong><font color='black'>Changes Done Successfully</font></strong></p>"),
+                    Toast.LENGTH_SHORT).show();
+        } else if (error.equals("sync")) {
+            Toast.makeText(c, Html.fromHtml("<p><strong><font color='black'> Synced Successfully</font></strong></p>"),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(c, Html.fromHtml("<p><strong><font color='red'>Operation Failed</font></strong></p>"),
+                    Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 }
