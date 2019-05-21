@@ -173,6 +173,30 @@ public class serverAPI extends AsyncTask<String, Void, String> {
             }
 
             if (temp.equals("Registration")) {
+                Registration re = new Registration();
+
+                try {
+                    speech = jobj.getJSONObject("response");
+                    speech = speech.getJSONObject("outputSpeech");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (speech.get("text").equals("message :Email id already exist , result :Failed")) {
+                        Registration.email_id.setError("Email Id already existing");
+                        Registration.email_id.setText("");
+                        Registration.email_id.setBackgroundResource(R.drawable.error_border);
+                        re.createsnackbar(2);
+                    }
+                    if (speech.get("text").equals("message :Failed to add , result :Failed")) {
+                        re.createsnackbar(3);
+                    }
+                    if (speech.get("text").equals("message :Added to database , result :Success")) {
+                        re.createsnackbar(0);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
             /*
