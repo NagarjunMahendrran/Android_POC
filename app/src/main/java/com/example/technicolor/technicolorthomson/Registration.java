@@ -27,6 +27,7 @@ public class Registration extends AppCompatActivity {
     static Context mainscreen;
     static Snackbar snackbar;
     public static final int PASSWORD_LENGTH = 8;
+    static  CoordinatorLayout Clayout ;
 
     public Registration() {
 
@@ -41,6 +42,7 @@ public class Registration extends AppCompatActivity {
         serial_id = findViewById(R.id.serial_id_text);
         pattern = Pattern.compile(regex);
         mainscreen = Registration.this;
+         Clayout = findViewById(R.id.snackbarlocation);
     }
 
     public void onClick(View view) {
@@ -51,9 +53,9 @@ public class Registration extends AppCompatActivity {
         }
         if(bt.getId() == R.id.btn_signup){
             if(validation()){
-                new serverAPI("Registration ", mainscreen).execute();
+                new serverAPI("registration", mainscreen).execute();
             }else{
-                createsnackbar(1);
+                serverAPI.createsnackbar(1);
             }
 
         }
@@ -130,30 +132,7 @@ public class Registration extends AppCompatActivity {
     }
 
 
-    public void createsnackbar(int error_code) {
-        String error_string = "";
-        int backgroundcolor = Color.RED;
-        switch (error_code) {
-            case 0:
-                error_string = "User Profile created successfully";
-                backgroundcolor = Color.GREEN;
-                break;
-            case 1:
-                error_string = "Please check the inputs!!!!";
-                break;
-            case 2:
-                error_string = "Email Id already existing";
-                break;
-            case 3:
-                error_string = "Operation failed";
-                break;
-        }
-        CoordinatorLayout Clayout = findViewById(R.id.snackbarlocation);
-        snackbar = Snackbar.make(Clayout, error_string, Snackbar.LENGTH_SHORT);
-        View snackBarView = snackbar.getView();
-        snackBarView.setBackgroundColor(backgroundcolor);
-        snackbar.show();
-    }
+
 
     public boolean is_Valid_Password(String password) {
 

@@ -4,10 +4,14 @@ package com.example.technicolor.technicolorthomson;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.text.Html;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -27,6 +31,8 @@ import java.nio.charset.StandardCharsets;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import static com.example.technicolor.technicolorthomson.Registration.Clayout;
+import static com.example.technicolor.technicolorthomson.Registration.snackbar;
 
 public class serverAPI extends AsyncTask<String, Void, String> {
 
@@ -45,19 +51,10 @@ public class serverAPI extends AsyncTask<String, Void, String> {
 
         temp = query;
         JSONObject jsonObject = null;
-
-        try {
-
-            // if(query.equals("InternetAccess")) {
-            //    state_ = MainActivity.internet_access.has(single_user.mac_address) ?  MainActivity.internet_access.getString(single_user.mac_address).equals("allow") ? "block" : "allow" : "block";
-            //    jsonObject = new JSONObject("{\"session\": {\"new\": false,\"sessionId\": \"amzn1.echo-api.session.d97d9658-900e-463d-8bad-446f5710faca\"},\"request\": {\"type\": \"IntentRequest\",\"requestId\": \"amzn1.echo-api.request.e6e7b8e2-a143-4a63-9d6a-5bc7e6cc869d\",\"intent\": {\"device\": {\"mac\": '"+single_user.mac_address+"',\"state\": '"+state_+"'},\"name\":" + query + ",\"slots\": {\"thing\": {\"name\": \"thing\",\"value\": \"John\"}}}}}");
-
-            //   }else if(query.equals("Subscribe")) {
-            // jsonObject = new JSONObject("{\"session\": {\"new\": false,\"sessionId\": \"amzn1.echo-api.session.d97d9658-900e-463d-8bad-446f5710faca\"},\"request\": {\"type\": \"IntentRequest\",\"requestId\": \"amzn1.echo-api.request.e6e7b8e2-a143-4a63-9d6a-5bc7e6cc869d\",\"intent\": {\"app\": {\"appname\": '"+apps.selected_button+"'},\"name\":" + query + ",\"slots\": {\"thing\": {\"name\": \"thing\",\"value\": \"John\"}}}}}");
-
-            // }
-            jsonObject = new JSONObject("{\"session\": {\"new\": false,\"sessionId\": \"amzn1.echo-api.session.d97d9658-900e-463d-8bad-446f5710faca\"},\"request\": {\"type\": \"IntentRequest\",\"requestId\": \"amzn1.echo-api.request.e6e7b8e2-a143-4a63-9d6a-5bc7e6cc869d\",\"intent\": {\"name\":" + query + ",\"slots\": {\"thing\": {\"name\": \"thing\",\"value\": \"John\"}}}}}");
-
+                try {
+             if(temp == "registration"){
+                 jsonObject = new JSONObject("{ \"session\": { \"new\": true, \"sessionId\": \"amzn1.echo-api.session.d97d9658-900e-463d-8bad-446f5710faca\" }, \"request\": { \"type\": \"IntentRequest\", \"requestId\": \"amzn1.echo-api.request.e6e7b8e2-a143-4a63-9d6a-5bc7e6cc869d\", \"intent\": { \"name\": \"registation\", \"userdetails\": { \"name\": \""+Registration.username.getText()+"\", \"email_id\": \""+Registration.email_id.getText()+"\", \"password\": \""+Registration.password.getText()+"\", \"serial_id\": \""+Registration.serial_id.getText()+"\" }, \"slots\": { \"thing\": { \"name\": \"thing\", \"value\": \"John\" } } } } }");
+             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -98,6 +95,31 @@ public class serverAPI extends AsyncTask<String, Void, String> {
         alertDialog.hide();
     }
 
+    public static void createsnackbar(int error_code) {
+        String error_string = "";
+        int backgroundcolor = Color.RED;
+        switch (error_code) {
+            case 0:
+                error_string = "User Profile created successfully";
+                backgroundcolor = Color.GREEN;
+                break;
+            case 1:
+                error_string = "Please check the inputs!!!!";
+                break;
+            case 2:
+                error_string = "Email Id already existing";
+                break;
+            case 3:
+                error_string = "Operation failed";
+                break;
+        }
+
+        snackbar = Snackbar.make(Clayout, error_string, Snackbar.LENGTH_SHORT);
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(backgroundcolor);
+        snackbar.show();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected String doInBackground(String... strings) {
@@ -105,7 +127,7 @@ public class serverAPI extends AsyncTask<String, Void, String> {
         /* forming th java.net.URL object */
         URL url = null;
         try {
-            url = new URL(" https://ey06ub3wba.execute-api.us-west-2.amazonaws.com/default");
+            url = new URL(" https://mkfe891u4i.execute-api.us-east-1.amazonaws.com/beta");
         } catch (MalformedURLException e1) {
             e1.printStackTrace();
         }
@@ -126,6 +148,7 @@ public class serverAPI extends AsyncTask<String, Void, String> {
             osw.write(String.valueOf(query));
             osw.close();
         } catch (IOException e1) {
+            Log.e("onpost" ,"0post");
             e1.printStackTrace();
         }
         /* Get Response and execute WebService request*/
@@ -137,7 +160,7 @@ public class serverAPI extends AsyncTask<String, Void, String> {
         }
         /* 200 represents HTTP OK */
         if (statusCode == HttpsURLConnection.HTTP_OK) {
-
+            Log.e("onpost" ,"sucess http");
             try {
                 inputStream = new BufferedInputStream(urlConnection.getInputStream());
 
@@ -160,44 +183,54 @@ public class serverAPI extends AsyncTask<String, Void, String> {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     protected void onPostExecute(String result) {
+
+        Log.e("onpost" ,"1post");
         MainActivity ma = new MainActivity();
         JSONObject jobj = null;
         if (result != null) {
 
             try {
                 jobj = new JSONObject(result);
+                Log.e("onpost" ,result);
             } catch (JSONException e) {
                 Toast.makeText(context, Html.fromHtml("<p><strong><font color='red'>Operation Failed</font></strong></p>"),
                         Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
 
-            if (temp.equals("Registration")) {
+            if (temp.equals("registration")) {
+                Log.e("onpost" ,"2post");
                 Registration re = new Registration();
-
                 try {
                     speech = jobj.getJSONObject("response");
                     speech = speech.getJSONObject("outputSpeech");
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    _switch();
+                    createsnackbar(3);
                 }
                 try {
                     if (speech.get("text").equals("message :Email id already exist , result :Failed")) {
                         Registration.email_id.setError("Email Id already existing");
                         Registration.email_id.setText("");
                         Registration.email_id.setBackgroundResource(R.drawable.error_border);
-                        re.createsnackbar(2);
+                        _switch();
+                        createsnackbar(2);
                     }
                     if (speech.get("text").equals("message :Failed to add , result :Failed")) {
-                        re.createsnackbar(3);
+                        _switch();
+                        createsnackbar(3);
                     }
                     if (speech.get("text").equals("message :Added to database , result :Success")) {
-                        re.createsnackbar(0);
+                        _switch();
+                        createsnackbar(0);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    _switch();
+                    createsnackbar(3);
                 }
-
+                _switch();
             }
             /*
             if (temp.equals("getPageLoadinfo")) {
